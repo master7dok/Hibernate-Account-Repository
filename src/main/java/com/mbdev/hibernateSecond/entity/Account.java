@@ -1,9 +1,7 @@
 package com.mbdev.hibernateSecond.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -12,7 +10,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long accountId;
 
-    public Account(String name, String age) {
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    private List<Bill> bills;
+
+    public Account(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
@@ -22,7 +23,7 @@ public class Account {
 
     private String name;
 
-    private String age;
+    private Integer age;
 
     public Long getAccountId() {
         return accountId;
@@ -40,12 +41,20 @@ public class Account {
         this.name = name;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
     }
 
     @Override
